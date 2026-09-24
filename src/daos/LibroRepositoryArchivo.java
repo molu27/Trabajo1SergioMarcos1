@@ -58,6 +58,7 @@ public class LibroRepositoryArchivo implements LibroRepository{
 
         while (rs.next()) {
             lista.add(mapearFila(rs));
+            
         }
 
     } catch (SQLException e) {
