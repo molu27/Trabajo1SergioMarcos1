@@ -23,8 +23,11 @@ public class Libro {
         this.stock = stock;
     }
 
-    public Libro(String id) {
-        this.id = id;
+    public Libro(String titulo, String autor, double precio, int stock) {
+        this.titulo = titulo;
+        this.autor = autor;
+        this.precio = precio;
+        this.stock = stock;
     }
 
     public Libro() {

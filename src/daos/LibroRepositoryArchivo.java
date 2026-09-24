@@ -12,169 +12,180 @@ import java.util.ArrayList;
 import java.util.List;
 import util.ConexionBD;
 
-
 /**
  *
  * @author DAM2
  */
-public class LibroRepositoryArchivo implements LibroRepository{
+public class LibroRepositoryArchivo implements LibroRepository {
 
     @Override
     public List<Libro> obtenerTodos() {
 
-    List<Libro> lista = new ArrayList<>();
+        List<Libro> lista = new ArrayList<>();
 
-    String sql = "SELECT * FROM libros";
+        String sql = "SELECT * FROM libros";
 
-    try (Connection con = (Connection) ConexionBD.getConnection();
-         PreparedStatement ps = con.prepareStatement(sql)) {
+        try (Connection con = (Connection) ConexionBD.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 
-        ResultSet rs = ps.executeQuery();
+            ResultSet rs = ps.executeQuery();
 
-        while (rs.next()) {
-            lista.add(mapearFila(rs));
+            while (rs.next()) {
+                lista.add(mapearFila(rs));
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
         }
 
-    } catch (SQLException e) {
-        System.out.println("Error: " + e.getMessage());
+        return lista;
     }
-
-    return lista;
-}
 
     @Override
-   public List<Libro> buscarPorTitulo(String titulo) {
+    public List<Libro> buscarPorTitulo(String titulo) {
 
-    List<Libro> lista = new ArrayList<>();
+        List<Libro> lista = new ArrayList<>();
 
-    String sql = "SELECT * FROM libros WHERE titulo LIKE ?";
+        String sql = "SELECT * FROM libros WHERE titulo LIKE ?";
 
-    try (Connection con = (Connection) ConexionBD.getConnection();
-         PreparedStatement ps = con.prepareStatement(sql)) {
+        try (Connection con = (Connection) ConexionBD.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 
-        ps.setString(1, "%" + titulo + "%");
+            ps.setString(1, "%" + titulo + "%");
 
-        ResultSet rs = ps.executeQuery();
+            ResultSet rs = ps.executeQuery();
 
-        while (rs.next()) {
-            lista.add(mapearFila(rs));
-            
+            while (rs.next()) {
+                lista.add(mapearFila(rs));
+
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
         }
 
-    } catch (SQLException e) {
-        System.out.println("Error: " + e.getMessage());
+        return lista;
     }
-
-    return lista;
-}
-
-    
 
     @Override
-   public List<Libro> buscarPorAutor(String autor) {
+    public List<Libro> buscarPorAutor(String autor) {
 
-    List<Libro> lista = new ArrayList<>();
+        List<Libro> lista = new ArrayList<>();
 
-    String sql = "SELECT * FROM libros WHERE autor LIKE ?";
+        String sql = "SELECT * FROM libros WHERE autor LIKE ?";
 
-    try (Connection con = (Connection) ConexionBD.getConnection();
-         PreparedStatement ps = con.prepareStatement(sql)) {
+        try (Connection con = (Connection) ConexionBD.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 
-        ps.setString(1, "%" + autor + "%");
+            ps.setString(1, "%" + autor + "%");
 
-        ResultSet rs = ps.executeQuery();
+            ResultSet rs = ps.executeQuery();
 
-        while (rs.next()) {
-            lista.add(mapearFila(rs));
+            while (rs.next()) {
+                lista.add(mapearFila(rs));
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
         }
 
-    } catch (SQLException e) {
-        System.out.println("Error: " + e.getMessage());
+        return lista;
     }
-
-    return lista;
-}
-
 
     @Override
     public List<Libro> buscarPorStockMinimo(int stockMinimo) {
 
-    List<Libro> lista = new ArrayList<>();
+        List<Libro> lista = new ArrayList<>();
 
-    String sql = "SELECT * FROM libros WHERE stock >= ?";
+        String sql = "SELECT * FROM libros WHERE stock >= ?";
 
-    try (Connection con = (Connection) ConexionBD.getConnection();
-         PreparedStatement ps = con.prepareStatement(sql)) {
+        try (Connection con = (Connection) ConexionBD.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 
-        ps.setInt(1, stockMinimo);
+            ps.setInt(1, stockMinimo);
 
-        ResultSet rs = ps.executeQuery();
+            ResultSet rs = ps.executeQuery();
 
-        while (rs.next()) {
-            lista.add(mapearFila(rs));
+            while (rs.next()) {
+                lista.add(mapearFila(rs));
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
         }
 
-    } catch (SQLException e) {
-        System.out.println("Error: " + e.getMessage());
+        return lista;
     }
-
-    return lista;
-}
 
     @Override
     public boolean insertar(Libro libro) {
 
-    String sql = "INSERT INTO libros (id, titulo, autor, precio, stock) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO libros (id, titulo, autor, precio, stock) VALUES (?, ?, ?, ?, ?)";
 
-    try (Connection con = (Connection) ConexionBD.getConnection();
-         PreparedStatement ps = con.prepareStatement(sql)) {
+        try (Connection con = (Connection) ConexionBD.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 
-        ps.setString(1, libro.getId());
-        ps.setString(2, libro.getTitulo());
-        ps.setString(3, libro.getAutor());
-        ps.setDouble(4, libro.getPrecio());
-        ps.setInt(5, libro.getStock());
+            ps.setString(1, libro.getId());
+            ps.setString(2, libro.getTitulo());
+            ps.setString(3, libro.getAutor());
+            ps.setDouble(4, libro.getPrecio());
+            ps.setInt(5, libro.getStock());
 
-        return ps.executeUpdate() > 0;
+            return ps.executeUpdate() > 0;
 
-    } catch (SQLException e) {
-        System.out.println("Error al insertar: " + e.getMessage());
-        return false;
+        } catch (SQLException e) {
+            System.out.println("Error al insertar: " + e.getMessage());
+            return false;
+        }
     }
-}
 
     @Override
-   public boolean eliminarPorId(String id) {
+    public boolean eliminarPorId(String id) {
 
-    String sql = "DELETE FROM libro WHERE id=?";
+        String sql = "DELETE FROM libro WHERE id=?";
 
-    try (Connection con = (Connection) ConexionBD.getConnection();
-         PreparedStatement ps = con.prepareStatement(sql)) {
+        try (Connection con = (Connection) ConexionBD.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 
-        ps.setString(1, id);
+            ps.setString(1, id);
 
-        return ps.executeUpdate() > 0;
+            return ps.executeUpdate() > 0;
 
-    } catch (SQLException e) {
-        System.out.println("Error al eliminar: " + e.getMessage());
-        return false;
+        } catch (SQLException e) {
+            System.out.println("Error al eliminar: " + e.getMessage());
+            return false;
+        }
     }
-}
-    private Libro mapearFila(ResultSet rs) throws SQLException {
-
-    Libro libro = new Libro();
-
-    libro.setId(rs.getString("id"));
-    libro.setTitulo(rs.getString("titulo"));
-    libro.setAutor(rs.getString("autor"));
-    libro.setPrecio(rs.getDouble("precio"));
-    libro.setStock(rs.getInt("stock"));
-
-    return libro;
-}
 
     @Override
     public List<Libro> buscarPorRangoPrecio(double precioMinimo, double precioMaximo) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
+        List<Libro> lista = new ArrayList<>();
+
+        String sql = "SELECT * FROM libros WHERE precio BETWEEN ? AND ?";
+
+        try (Connection con = (Connection) ConexionBD.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setDouble(1, precioMinimo);
+            ps.setDouble(2, precioMaximo);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                lista.add(mapearFila(rs));
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        return lista;
+    }
+    
+      private Libro mapearFila(ResultSet rs) throws SQLException {
+
+        Libro libro = new Libro();
+
+        libro.setId(rs.getString("id"));
+        libro.setTitulo(rs.getString("titulo"));
+        libro.setAutor(rs.getString("autor"));
+        libro.setPrecio(rs.getDouble("precio"));
+        libro.setStock(rs.getInt("stock"));
+
+        return libro;
     }
 }
