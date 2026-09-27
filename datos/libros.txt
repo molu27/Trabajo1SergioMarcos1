@@ -1,0 +1,10 @@
+L001^El Quijote^Miguel de Cervantes^15.50^10
+L002^1984^George Orwell^12.99^5
+L003^Cien años de soledad^Gabriel García Márquez^18.75^8
+L004^El principito^Antoine de Saint-Exupéry^10.50^15
+L005^Harry Potter y la piedra filosofal^J.K. Rowling^20.00^7
+L006^El Hobbit^J.R.R. Tolkien^14.95^12
+L007^El nombre de la rosa^Umberto Eco^16.80^4
+L008^La sombra del viento^Carlos Ruiz Zafón^19.90^9
+L009^Orgullo y prejuicio^Jane Austen^11.25^6
+L010^El Quijote^Miguel de Cervantes^17.50^3
