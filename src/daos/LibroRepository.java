@@ -5,6 +5,7 @@
 package daos;
 
 import java.util.List;
+import modelo.Libro;
 
 /**
  *
@@ -18,4 +19,5 @@ public interface LibroRepository {
     List<Libro> buscarPorStockMinimo(int stockMinimo);
     boolean insertar(Libro libro);
     boolean eliminarPorId(String id);
+    void hacerCopia(LibroRepository destino);
 }

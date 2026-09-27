@@ -2,13 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package daos;
+package modelo;
 
 /**
  *
  * @author DAM2
  */
 public class Libro {
+
     protected String id;
     protected String titulo;
     protected String autor;
@@ -32,7 +33,6 @@ public class Libro {
 
     public Libro() {
     }
-    
 
     public String getId() {
         return id;
@@ -79,6 +79,4 @@ public class Libro {
         return "Libro{" + "id=" + id + ", titulo=" + titulo + ", autor=" + autor + ", precio=" + precio + ", stock=" + stock + '}';
     }
 
-  
 }
-

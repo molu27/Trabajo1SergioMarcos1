@@ -10,13 +10,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import modelo.Libro;
 import util.ConexionBD;
 
 /**
  *
  * @author DAM2
  */
-public class LibroRepositoryArchivo implements LibroRepository {
+public class LibroRepositoryMYSQL implements LibroRepository {
 
     @Override
     public List<Libro> obtenerTodos() {
@@ -25,7 +26,7 @@ public class LibroRepositoryArchivo implements LibroRepository {
 
         String sql = "SELECT * FROM libros";
 
-        try (Connection con = (Connection) ConexionBD.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+        try (Connection con = ConexionBD.conectar(); PreparedStatement ps = con.prepareStatement(sql)) {
 
             ResultSet rs = ps.executeQuery();
 
@@ -47,7 +48,7 @@ public class LibroRepositoryArchivo implements LibroRepository {
 
         String sql = "SELECT * FROM libros WHERE titulo LIKE ?";
 
-        try (Connection con = (Connection) ConexionBD.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+        try (Connection con = ConexionBD.conectar(); PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setString(1, "%" + titulo + "%");
 
@@ -72,7 +73,7 @@ public class LibroRepositoryArchivo implements LibroRepository {
 
         String sql = "SELECT * FROM libros WHERE autor LIKE ?";
 
-        try (Connection con = (Connection) ConexionBD.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+        try (Connection con = ConexionBD.conectar(); PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setString(1, "%" + autor + "%");
 
@@ -96,7 +97,7 @@ public class LibroRepositoryArchivo implements LibroRepository {
 
         String sql = "SELECT * FROM libros WHERE stock >= ?";
 
-        try (Connection con = (Connection) ConexionBD.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+        try (Connection con = ConexionBD.conectar(); PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setInt(1, stockMinimo);
 
@@ -118,7 +119,7 @@ public class LibroRepositoryArchivo implements LibroRepository {
 
         String sql = "INSERT INTO libros (id, titulo, autor, precio, stock) VALUES (?, ?, ?, ?, ?)";
 
-        try (Connection con = (Connection) ConexionBD.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+        try (Connection con = ConexionBD.conectar(); PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setString(1, libro.getId());
             ps.setString(2, libro.getTitulo());
@@ -137,9 +138,9 @@ public class LibroRepositoryArchivo implements LibroRepository {
     @Override
     public boolean eliminarPorId(String id) {
 
-        String sql = "DELETE FROM libro WHERE id=?";
+        String sql = "DELETE FROM libros WHERE id=?";
 
-        try (Connection con = (Connection) ConexionBD.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+        try (Connection con = ConexionBD.conectar(); PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setString(1, id);
 
@@ -158,7 +159,7 @@ public class LibroRepositoryArchivo implements LibroRepository {
 
         String sql = "SELECT * FROM libros WHERE precio BETWEEN ? AND ?";
 
-        try (Connection con = (Connection) ConexionBD.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+        try (Connection con = ConexionBD.conectar(); PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setDouble(1, precioMinimo);
             ps.setDouble(2, precioMaximo);
@@ -176,7 +177,18 @@ public class LibroRepositoryArchivo implements LibroRepository {
         return lista;
     }
     
-      private Libro mapearFila(ResultSet rs) throws SQLException {
+    @Override
+    public void hacerCopia(LibroRepository destino) {
+        List<Libro> libros = obtenerTodos();
+
+        for (Libro libro : libros) {
+            destino.insertar(libro);
+        }
+
+        System.out.println("Copia realizada correctamente.");
+    }
+
+    private Libro mapearFila(ResultSet rs) throws SQLException {
 
         Libro libro = new Libro();
 
@@ -188,4 +200,5 @@ public class LibroRepositoryArchivo implements LibroRepository {
 
         return libro;
     }
-}
+
+} 

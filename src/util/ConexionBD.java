@@ -19,10 +19,6 @@ String user = env.get("DB_USER");
 String pass = env.get("DB_PASS");
 
 return DriverManager.getConnection(url, user, pass);
-  
-  
-  
-  
   }
 
     public static com.sun.jdi.connect.spi.Connection getConnection() {
