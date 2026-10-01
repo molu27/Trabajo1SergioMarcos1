@@ -14,17 +14,32 @@ import java.util.List;
 import modelo.Libro;
 
 /**
+ * Implementa las operaciones del repositorio de libros utilizando
+ * un archivo de texto para almacenar los datos.
  *
  * @author 2DAM
  */
 public class LibroRepositoryArchivo implements LibroRepository {
 
     private String rutaArchivo;
-
+    
+    
+    /**
+     * Crea un repositorio de libros asociado al archivo indicado.
+     *
+     * @param rutaArchivo ruta del archivo donde se almacenarán los libros
+     */
     public LibroRepositoryArchivo(String rutaArchivo) {
         this.rutaArchivo = rutaArchivo;
     }
-
+    
+     /**
+     * Lee todas las líneas del archivo indicado, separa los datos de cada libro
+     * utilizando {@code ^} y crea un objeto {@link Libro} por cada línea.
+     *
+     * @return lista con los libros almacenados en el archivo; vacía si no se
+     *         puede leer el archivo
+     */
     @Override
     public List<Libro> obtenerTodos() {
 
@@ -56,7 +71,14 @@ public class LibroRepositoryArchivo implements LibroRepository {
 
         return lista;
     }
-
+    
+     /**
+     * Obtiene todos los libros del archivo y filtra aquellos cuyo título
+     * coincide con el indicado sin distinguir entre mayúsculas y minúsculas.
+     *
+     * @param titulo título que se desea buscar
+     * @return lista de libros cuyo título coincide con el indicado
+     */
     @Override
     public List<Libro> buscarPorTitulo(String titulo) {
         List<Libro> resultado = new ArrayList<>();
@@ -70,7 +92,14 @@ public class LibroRepositoryArchivo implements LibroRepository {
 
         return resultado;
     }
-
+    
+      /**
+     * Obtiene todos los libros del archivo y filtra aquellos cuyo autor
+     * coincide con el indicado sin distinguir entre mayúsculas y minúsculas.
+     *
+     * @param autor autor que se desea buscar
+     * @return lista de libros cuyo autor coincide con el indicado
+     */
     @Override
     public List<Libro> buscarPorAutor(String autor) {
         List<Libro> resultado = new ArrayList<>();
@@ -84,7 +113,15 @@ public class LibroRepositoryArchivo implements LibroRepository {
 
         return resultado;
     }
-
+    
+     /**
+     * Obtiene todos los libros del archivo y filtra aquellos cuyo precio
+     * se encuentra entre el precio mínimo y el precio máximo indicados.
+     *
+     * @param precioMinimo precio mínimo del rango de búsqueda
+     * @param precioMaximo precio máximo del rango de búsqueda
+     * @return lista de libros cuyo precio se encuentra dentro del rango indicado
+     */
     @Override
     public List<Libro> buscarPorRangoPrecio(double precioMinimo, double precioMaximo) {
         List<Libro> resultado = new ArrayList<>();
@@ -100,7 +137,14 @@ public class LibroRepositoryArchivo implements LibroRepository {
 
         return resultado;
     }
-
+    
+    /**
+     * Obtiene todos los libros del archivo y filtra aquellos cuyo stock
+     * es igual o superior al mínimo indicado.
+     *
+     * @param stockMinimo cantidad mínima de unidades disponibles
+     * @return lista de libros cuyo stock es igual o superior al mínimo indicado
+     */
     @Override
     public List<Libro> buscarPorStockMinimo(int stockMinimo) {
         List<Libro> resultado = new ArrayList<>();
@@ -114,7 +158,15 @@ public class LibroRepositoryArchivo implements LibroRepository {
 
         return resultado;
     }
-
+    
+     /**
+     * Convierte los datos del libro en una línea de texto separada por
+     * {@code ^} y la añade al final del archivo.
+     *
+     * @param libro libro que se desea insertar en el archivo
+     * @return {@code true} si el libro se añade correctamente;
+     *         {@code false} si se produce un error al escribir en el archivo
+     */
     @Override
     public boolean insertar(Libro libro) {
         String linea = libro.getId() + "^"
@@ -140,7 +192,16 @@ public class LibroRepositoryArchivo implements LibroRepository {
             return false;
         }
     }
-
+    
+     /**
+     * Lee los libros del archivo, elimina de la lista el libro cuyo identificador
+     * coincide con el indicado y vuelve a escribir el contenido actualizado
+     * en el archivo.
+     *
+     * @param id identificador del libro que se desea eliminar
+     * @return {@code true} si se elimina un libro; {@code false} si no se encuentra
+     *         el identificador o se produce un error al escribir el archivo
+     */
     @Override
     public boolean eliminarPorId(String id) {
         List<Libro> libros = obtenerTodos();
@@ -187,7 +248,13 @@ public class LibroRepositoryArchivo implements LibroRepository {
         }
 
     }
-
+    
+     /**
+     * Obtiene todos los libros almacenados en el archivo y los inserta
+     * en el repositorio de destino para realizar una copia.
+     *
+     * @param destino repositorio en el que se almacenarán los libros copiados
+     */
     @Override
     public void hacerCopia(LibroRepository destino) {
 

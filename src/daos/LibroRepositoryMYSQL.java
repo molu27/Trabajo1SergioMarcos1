@@ -14,11 +14,18 @@ import modelo.Libro;
 import util.ConexionBD;
 
 /**
- *
+ * Implementa las operaciones del repositorio de libros utilizando
+ * una base de datos MySQL.
  * @author DAM2
  */
 public class LibroRepositoryMYSQL implements LibroRepository {
-
+      /**
+     * Obtiene todos los libros almacenados en la tabla {@code libros}
+     * de la base de datos y los convierte en objetos {@link Libro}.
+     *
+     * @return lista con todos los libros almacenados; vacía si no se
+     *         encuentra ningún libro o se produce un error de SQL
+     */
     @Override
     public List<Libro> obtenerTodos() {
 
@@ -40,7 +47,14 @@ public class LibroRepositoryMYSQL implements LibroRepository {
 
         return lista;
     }
-
+     /**
+     * Busca en la tabla {@code libros} aquellos libros cuyo autor
+     * contiene el texto indicado, utilizando una consulta SQL con {@code LIKE}.
+     *
+     * @param autor texto que se utilizará para buscar coincidencias en el autor
+     * @return lista de libros cuyo autor contiene el texto indicado; vacía
+     *         si no se encuentra ningún libro o se produce un error de SQL
+     */
     @Override
     public List<Libro> buscarPorTitulo(String titulo) {
 
@@ -89,7 +103,14 @@ public class LibroRepositoryMYSQL implements LibroRepository {
 
         return lista;
     }
-
+    /**
+     * Busca en la tabla {@code libros} aquellos libros cuyo stock
+     * es mayor o igual que el valor mínimo indicado.
+     *
+     * @param stockMinimo cantidad mínima de unidades que debe tener el libro
+     * @return lista de libros cuyo stock es mayor o igual al mínimo indicado;
+     *         vacía si no se encuentra ningún libro o se produce un error de SQL
+     */
     @Override
     public List<Libro> buscarPorStockMinimo(int stockMinimo) {
 
@@ -113,7 +134,13 @@ public class LibroRepositoryMYSQL implements LibroRepository {
 
         return lista;
     }
-
+     /**
+     * Inserta un nuevo libro en la tabla {@code libros} de la base de datos.
+     *
+     * @param libro libro que se desea insertar
+     * @return {@code true} si el libro se inserta correctamente; {@code false}
+     *         si no se realiza ninguna inserción o se produce un error de SQL
+     */
     @Override
     public boolean insertar(Libro libro) {
 
@@ -134,7 +161,14 @@ public class LibroRepositoryMYSQL implements LibroRepository {
             return false;
         }
     }
-
+      /**
+     * Elimina de la tabla {@code libros} el libro que tenga el identificador
+     * indicado.
+     *
+     * @param id identificador del libro que se desea eliminar
+     * @return {@code true} si se elimina algún libro; {@code false} si no se
+     *         encuentra el identificador o se produce un error de SQL
+     */
     @Override
     public boolean eliminarPorId(String id) {
 
@@ -151,7 +185,15 @@ public class LibroRepositoryMYSQL implements LibroRepository {
             return false;
         }
     }
-
+    /**
+     * Busca en la tabla {@code libros} los libros cuyo precio se encuentra
+     * entre el precio mínimo y el precio máximo indicados.
+     *
+     * @param precioMinimo precio mínimo del rango de búsqueda
+     * @param precioMaximo precio máximo del rango de búsqueda
+     * @return lista de libros cuyo precio está dentro del rango indicado;
+     *         vacía si no se encuentra ningún libro o se produce un error de SQL
+     */
     @Override
     public List<Libro> buscarPorRangoPrecio(double precioMinimo, double precioMaximo) {
 
@@ -176,7 +218,12 @@ public class LibroRepositoryMYSQL implements LibroRepository {
 
         return lista;
     }
-    
+     /**
+     * Obtiene todos los libros de este repositorio y los inserta en el
+     * repositorio de destino para realizar una copia.
+     *
+     * @param destino repositorio en el que se almacenará la copia de los libros
+     */
     @Override
     public void hacerCopia(LibroRepository destino) {
         List<Libro> libros = obtenerTodos();
@@ -187,7 +234,15 @@ public class LibroRepositoryMYSQL implements LibroRepository {
 
         System.out.println("Copia realizada correctamente.");
     }
-
+    /**
+     * Convierte una fila del resultado de una consulta SQL en un objeto
+     * {@link Libro}, obteniendo sus datos de las columnas de la tabla.
+     *
+     * @param rs resultado de la consulta que contiene la fila que se va a mapear
+     * @return objeto {@link Libro} creado con los datos de la fila
+     * @throws SQLException si se produce un error al obtener los datos
+     *         de la fila del resultado
+     */
     private Libro mapearFila(ResultSet rs) throws SQLException {
 
         Libro libro = new Libro();
