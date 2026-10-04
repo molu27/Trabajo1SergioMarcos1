@@ -12,11 +12,19 @@ import modelo.Libro;
 import util.LibroRepositoryArchivo;
 
 /**
+ * Clase principal que permite gestionar los libros utilizando un repositorio
+ * de archivo de texto o un repositorio MySQL mediante un menú de opciones.
  *
  * @author 2DAM
  */
 public class Main {
 
+    /**
+     * Inicia la aplicación, permite seleccionar el origen de datos y muestra
+     * un menú para consultar, insertar, eliminar y copiar libros.
+     *
+     * @param args argumentos recibidos al iniciar la aplicación
+     */
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
