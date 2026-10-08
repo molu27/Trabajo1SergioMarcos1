@@ -32,7 +32,7 @@ public class Main {
         System.out.println("===== ORIGEN DE DATOS =====");
         System.out.println("1. Fichero TXT");
         System.out.println("2. MySQL");
-        System.out.print("Elige una opción: ");
+        System.out.print("Elige una opción : ");
 
         int tipo = Integer.parseInt(sc.nextLine());
 
