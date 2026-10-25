@@ -1,8 +1,8 @@
 ﻿# Trabajo1SergioMarcos1
 
-#Descripción
+## Descripción
 
-Aplicación Java para gestionar libros, con dos opciones de almacenamiento: Un fichero de texto y una base de datos  MySQL.
+Aplicación Java para gestionar libros, con dos opciones de almacenamiento: un fichero de texto y una base de datos MySQL.
 
 ## Requisitos
 
@@ -13,11 +13,14 @@ Aplicación Java para gestionar libros, con dos opciones de almacenamiento: Un f
 ## Instalación rápida
 
 1. Descargar o clonar el repositorio del proyecto.
-2. Configurar la base de datos ejecutando el script `sql/init.sql` en MySQL.
-3. Crear el archivo `.env` a partir de `.env.example` y configurar los datos de conexión.
-4. Abrir el proyecto en Apache NetBeans.
-5. Limpiar y compilar el proyecto.
-6. Ejecutar la clase principal `app.Main`.
+2. Comprobar que las librerías necesarias están disponibles en la carpeta `lib/`.
+3. Configurar la base de datos ejecutando el script `sql/init.sql` en MySQL.
+4. Crear el archivo `.env` a partir de `.env.example` y configurar los datos de conexión.
+5. Abrir el proyecto en Apache NetBeans.
+6. Limpiar y compilar el proyecto.
+7. Ejecutar la clase principal `app.Main`.
+
+**Importante:** el script `sql/init.sql` elimina y vuelve a crear la tabla `libros`. Antes de ejecutarlo, hay que guardar los datos que se quieran conservar.
 
 ## Variables de entorno
 
@@ -35,6 +38,3 @@ No se debe publicar el archivo `.env`, ya que puede contener información privad
 
 - [Manual de despliegue](docs/manual_despliegue.pdf)
 - [Javadoc](javadoc/index.html)
-
-
-
